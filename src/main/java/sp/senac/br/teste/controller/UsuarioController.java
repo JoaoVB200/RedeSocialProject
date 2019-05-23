@@ -7,16 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import sp.senac.br.teste.entity.Usuario;
 import sp.senac.br.teste.repositories.UsuarioRepository;
+import sp.senac.br.teste.service.UsuarioService;
+
+import java.util.List;
 
 @Controller
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
+    public UsuarioService usuarioService;
 
 
     @GetMapping("/cadastroUsuario")
@@ -29,10 +31,22 @@ public class UsuarioController {
 
         Usuario usuario = new Usuario(nome,email,senha,perfil);
 
-        usuarioRepository.save(usuario);
-
-        logger.info(usuario.toString());
+        usuarioService.salvar(usuario);
 
         return "/cadastro_usuario";
     }
+
+
+    @PostMapping("/listar")
+    public ModelAndView listarUsuario(){
+
+        Iterable<Usuario> usuarios = usuarioService.listarTodos();
+
+        ModelAndView mv = new ModelAndView("/listar_usuario");
+
+        mv.addObject("usuarios",usuarios);
+
+        return mv;
+    }
+
 }
