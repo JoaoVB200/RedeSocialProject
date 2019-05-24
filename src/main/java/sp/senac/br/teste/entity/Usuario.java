@@ -24,14 +24,14 @@ public class Usuario {
     @Column
     private String perfil;
 
-    @Column
-    private String apelido;
-
     public Usuario(String nome, String email, String senha, String perfil) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.perfil = perfil;
+    }
+    public Usuario(){
+
     }
 
     public Integer getId() {
@@ -42,7 +42,7 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNome() {
+    public Usuario getNome() {
         return nome;
     }
 
